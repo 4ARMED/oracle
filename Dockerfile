@@ -7,9 +7,7 @@ RUN yum install -y libaio bc gettext; \
     yum clean all
 
 # Install Oracle XE
-ADD rpm/oracle-xe-11.2.0-1.0.x86_64.rpm.tar.gz /tmp/
-RUN rpm --ignoreos -ivh /tmp/oracle-xe-11.2.0-1.0.x86_64.rpm; \
-    rm -rf /tmp/oracle-xe-11.2.0-1.0.x86_64.rpm
+RUN rpm --ignoreos -ivh https://github.com/4ARMED/oracle/raw/master/rpm/oracle-xe-11.2.0-1.0.x86_64.rpm
 
 # Configure instance
 ADD config/xe.rsp config/init.ora config/initXETemp.ora /u01/app/oracle/product/11.2.0/xe/config/scripts/
