@@ -5,7 +5,7 @@ sed -i -E "s/HOST = [^)]+/HOST = $HOSTNAME/g" $ORACLE_HOME/network/admin/listene
 sed -i -E "s/HOST = [^)]+/HOST = $HOSTNAME/g" $ORACLE_HOME/network/admin/tnsnames.ora
 
 # Default value baked into the image - bit kludgy this
-ORACLE_PASSWORD=P3hy3h6cl4O4IPnLZybQ
+SYS_SCRIPT_PASSWORD=P3hy3h6cl4O4IPnLZybQ
 
 while true; do
     pmon=`ps -ef | grep pmon_$ORACLE_SID | grep -v grep`
@@ -23,11 +23,11 @@ while true; do
 		echo @$ORACLE_HOME/apex/apxxepwd.sql \"$ORACLE_SYS_PASSWORD\"\; | /bin/su - oracle -c "sqlplus -s / as sysdba"
 
 		# Update the ORACLE_PASSWORD value if we're changing it as we use it next section
-		ORACLE_PASSWORD=$ORACLE_SYS_PASSWORD
+		SYS_SCRIPT_PASSWORD=$ORACLE_SYS_PASSWORD
 	fi
 
 	if [ -n "$STARTUP_SQL" ]; then
-		echo @$STARTUP_SQL \"$ORACLE_USER\" \"$ORACLE_PASSWORD\"\; | /bin/su - oracle -c "sqlplus system/$ORACLE_PASSWORD"
+		echo @$STARTUP_SQL \"$ORACLE_USER\" \"$ORACLE_PASSWORD\"\; | /bin/su - oracle -c "sqlplus system/$SYS_SCRIPT_PASSWORD"
 	fi
     fi
     sleep 60m
