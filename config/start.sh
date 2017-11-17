@@ -27,7 +27,7 @@ while true; do
 	fi
 
 	if [ -n "$STARTUP_SQL" ]; then
-		/bin/su - oracle -c "sqlplus system/$ORACLE_PASSWORD @$STARTUP_SQL $ORACLE_USER $ORACLE_PASSWORD"
+		echo @$STARTUP_SQL \"$ORACLE_USER\" \"$ORACLE_PASSWORD\"\; | /bin/su - oracle -c "sqlplus system/$ORACLE_PASSWORD"
 	fi
     fi
     sleep 60m
